@@ -1,5 +1,12 @@
-# Code mein har badlaav ke baad, this rebuilds the project and redeploys it to local Tomcat
-$tomcat = "C:\Tools\apache-tomcat-10.1.60"
+# Rebuilds the project and redeploys it to a local Tomcat.
+# Requires the CATALINA_HOME environment variable (see README).
+
+$tomcat = $env:CATALINA_HOME
+if (-not $tomcat -or -not (Test-Path "$tomcat\bin\startup.bat")) {
+    Write-Host "CATALINA_HOME is not set or does not point to a Tomcat folder."
+    Write-Host "See the 'One-time setup' section of README.md."
+    exit 1
+}
 
 mvn clean package
 if ($LASTEXITCODE -ne 0) {

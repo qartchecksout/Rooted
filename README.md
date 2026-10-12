@@ -1,4 +1,4 @@
-﻿\# Rooted
+# Rooted
 
 
 
@@ -8,35 +8,35 @@ Java Servlets, JSP, JDBC and MySQL for our Java course.
 
 
 
-\## Requirements
+## Requirements
 
 
 
-\- JDK 17 or newer
+- JDK 17 or newer
 
-\- Apache Maven 3.9+
+- Apache Maven 3.9+
 
-\- Apache Tomcat 10.1 (download the \*\*zip\*\*, not the installer)
+- Apache Tomcat 10.1 (download the **zip**, not the installer)
 
-\- Git
+- Git
 
-\- MySQL (not used yet)
-
-
-
-\## One-time setup (Windows)
+- MySQL (not used yet)
 
 
 
-1\. Make sure `JAVA\_HOME` points to your JDK folder (no trailing backslash), and
+## One-time setup (Windows)
+
+
+
+1. Make sure `JAVA\_HOME` points to your JDK folder (no trailing backslash), and
 
 &#x20;  that `java -version` and `mvn -v` both work in a new terminal.
 
-2\. Extract Tomcat to a path without spaces, e.g. `C:\\Tools\\apache-tomcat-10.1.60`.
+2. Extract Tomcat to a path without spaces, e.g. `C:\\Tools\\apache-tomcat-10.1.60`.
 
-3\. Point `CATALINA\_HOME` at that folder (no trailing backslash), then open a
+3. Point `CATALINA\_HOME` at that folder (no trailing backslash), then open a
 
-&#x20;  \*\*new\*\* terminal:
+&#x20;  **new** terminal:
 
 ```
 
@@ -44,7 +44,7 @@ Java Servlets, JSP, JDBC and MySQL for our Java course.
 
 ```
 
-4\. Clone the repo:
+4. Clone the repo:
 
 ```
 
@@ -56,7 +56,7 @@ Java Servlets, JSP, JDBC and MySQL for our Java course.
 
 
 
-\## Build and run
+## Build and run
 
 
 
@@ -80,31 +80,31 @@ Run the script again every time you change code.
 
 
 
-\## Team workflow
+## Team workflow
 
 
 
-\- Never commit directly to `main`.
+- Never commit directly to `main`.
 
-\- Start every task from fresh code: `git checkout main`, then `git pull`.
+- Start every task from fresh code: `git checkout main`, then `git pull`.
 
-\- Create a branch for your task: `git checkout -b feature/short-name`.
+- Create a branch for your task: `git checkout -b feature/short-name`.
 
-\- Commit small and often, push the branch, and open a Pull Request on GitHub.
+- Commit small and often, push the branch, and open a Pull Request on GitHub.
 
-\- Another teammate looks it over before it is merged into `main`.
-
-
-
-\## Project structure
+- Another teammate looks it over before it is merged into `main`.
 
 
 
-\- `src/main/java/com/rooted/...` - Java code (Servlets, and later DAOs/models)
+## Project structure
 
-\- `src/main/webapp` - HTML, CSS and JSP pages
 
-\- `pom.xml` - Maven build configuration
+
+- `src/main/java/com/rooted/...` - Java code (Servlets, and later DAOs/models)
+
+- `src/main/webapp` - HTML, CSS and JSP pages
+
+- `pom.xml` - Maven build configuration
 
 \- `deploy.ps1` - one-command build and deploy to local Tomcat
 

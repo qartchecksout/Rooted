@@ -6,23 +6,21 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
-// Tells Tomcat: requests to /hello go to this class
 @WebServlet("/hello")
+public class HelloServlet extends HttpServlet {
 
-public class HelloServlet extends HttpServlet 
-{
-
-    // doGet runs when a browser opens the URL (an HTTP GET request)
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-            {
+            throws ServletException, IOException {
 
-                response.setContentType("text/html;charset=UTF-8");
-                PrintWriter out = response.getWriter();
-                out.println("<h1>Aur BKL</h1>");
-                out.println("<p>tomcat localhost karwaa deta hai, java se banaaya hai oye hoye</p>");
-            }
+        // Data the page will display
+        request.setAttribute("greeting", "Hello from a Servlet, shown by a JSP!");
+        request.setAttribute("plants", List.of("Tulsi", "Rose", "Money plant"));
+
+        // Hand the request over to the JSP, which builds the actual page
+        request.getRequestDispatcher("/WEB-INF/views/hello.jsp")
+               .forward(request, response);
+    }
 }

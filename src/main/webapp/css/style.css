@@ -1,0 +1,126 @@
+
+/* Rooted — a little corner of the internet */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #eee8d9;
+    color: #383d30;
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.6;
+}
+
+header {
+    background: #354f3b;
+    color: #f7f1e5;
+    padding: 24px 8%;
+    border-bottom: 5px solid #b5a477;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header h1 span {
+    color: #c8d5ae;
+}
+
+header p {
+    margin-top: 0;
+}
+
+nav {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+nav a {
+    color: #f7f1e5;
+}
+
+main {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+section {
+    background: #faf7ef;
+    border: 1px solid #c9c5b3;
+    padding: 22px;
+    margin-bottom: 24px;
+}
+
+h2 {
+    color: #354f3b;
+    border-bottom: 1px dashed #a8ad91;
+    padding-bottom: 8px;
+}
+
+.welcome {
+    background: #e0e6d4;
+    border-left: 5px solid #617b50;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th, td {
+    border: 1px solid #d2cfbd;
+    padding: 10px;
+}
+
+th {
+    background: #e5e8d9;
+    color: #354f3b;
+}
+
+tbody tr:nth-child(even) {
+    background: #f0eee3;
+}
+
+article {
+    border: 1px dotted #a8ad91;
+    padding: 15px;
+    margin-top: 12px;
+}
+
+article h3 {
+    margin-top: 0;
+}
+
+article p:first-of-type {
+    color: #777663;
+    font-size: 0.9rem;
+}
+
+footer {
+    text-align: center;
+    background: #354f3b;
+    color: #f7f1e5;
+    padding: 15px;
+    margin-top: 40px;
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 20px;
+    }
+
+    table {
+        font-size: 0.85rem;
+    }
+
+    th, td {
+        padding: 6px;
+    }
+}

@@ -106,5 +106,5 @@ Run the script again every time you change code.
 
 - `pom.xml` - Maven build configuration
 
-\- `deploy.ps1` - one-command build and deploy to local Tomcat
+- `deploy.ps1` - one-command build and deploy to local Tomcat
 

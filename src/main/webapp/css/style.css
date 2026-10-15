@@ -111,6 +111,73 @@ footer {
     margin-top: 40px;
 }
 
+/* Form controls and inputs */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #354f3b;
+}
+
+.form-control {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #b5a477;
+    background: #fffdf9;
+    font-family: inherit;
+    font-size: 1rem;
+    color: #383d30;
+    border-radius: 2px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #617b50;
+    box-shadow: 0 0 4px rgba(97, 123, 80, 0.4);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 18px;
+    background: #354f3b;
+    color: #f7f1e5;
+    border: 1px solid #283b2d;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 2px;
+}
+
+.btn:hover {
+    background: #47684f;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+}
+
+.alert-success {
+    background: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+}
+
 @media (max-width: 600px) {
     header {
         padding: 20px;

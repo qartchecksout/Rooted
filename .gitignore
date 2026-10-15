@@ -34,3 +34,6 @@ target/
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# Database credentials — never commit the real file
+src/main/resources/db.properties

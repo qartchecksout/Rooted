@@ -1,0 +1,22 @@
+# ---------------------------------------------------------------
+# Rooted — Database Configuration (EXAMPLE / TEMPLATE)
+#
+# HOW TO USE:
+#   1. Copy this file:  cp db.properties.example db.properties
+#   2. Fill in YOUR MySQL username and password below.
+#   3. db.properties is in .gitignore — your real creds stay local.
+# ---------------------------------------------------------------
+
+# JDBC driver class (do not change for MySQL)
+db.driver=com.mysql.cj.jdbc.Driver
+
+# Connection URL
+# - localhost:3306   → default MySQL port on your machine
+# - rooted_db       → database created by database/schema.sql
+# - useSSL=false    → skip SSL for local dev
+# - serverTimezone  → avoids timezone offset warnings
+db.url=jdbc:mysql://localhost:3306/rooted_db?useSSL=false&serverTimezone=Asia/Kolkata&allowPublicKeyRetrieval=true
+
+# Your MySQL login credentials
+db.username=root
+db.password=YOUR_PASSWORD_HERE

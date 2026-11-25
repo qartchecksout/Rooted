@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS forums (
 
 -- --------------------------------------------------------
 -- Table: threads
--- A discussion thread inside a forum, started by a user.
+-- A discussion thread inside a forum, started by a user...
 -- --------------------------------------------------------
 CREATE TABLE IF NOT EXISTS threads (
     id         INT          NOT NULL AUTO_INCREMENT,

@@ -15,7 +15,7 @@ import java.util.Optional;
 
 /**
  * Data Access Object for discussion threads.
- * Maps to the `threads` table and joins with `users` and `posts`.
+ * Maps to the `threads` table and joins with `users`, `forums`, and `posts`.
  */
 public class ForumThreadDAO {
 
@@ -46,17 +46,18 @@ public class ForumThreadDAO {
     }
 
     /**
-     * Finds a thread by ID, including its author's username and post count.
+     * Finds a thread by ID, including its author's username, forum name, and post count.
      */
     public Optional<ForumThread> findById(int id) throws SQLException {
         String sql = "SELECT t.id, t.forum_id, t.user_id, t.title, t.created_at, " +
-                     "       u.username AS author_name, " +
+                     "       u.username AS author_name, f.name AS forum_name, " +
                      "       COUNT(p.id) AS post_count " +
                      "FROM threads t " +
                      "JOIN users u ON t.user_id = u.id " +
+                     "JOIN forums f ON t.forum_id = f.id " +
                      "LEFT JOIN posts p ON t.id = p.thread_id " +
                      "WHERE t.id = ? " +
-                     "GROUP BY t.id, t.forum_id, t.user_id, t.title, t.created_at, u.username";
+                     "GROUP BY t.id, t.forum_id, t.user_id, t.title, t.created_at, u.username, f.name";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -77,13 +78,14 @@ public class ForumThreadDAO {
     public List<ForumThread> findByForumId(int forumId) throws SQLException {
         List<ForumThread> list = new ArrayList<>();
         String sql = "SELECT t.id, t.forum_id, t.user_id, t.title, t.created_at, " +
-                     "       u.username AS author_name, " +
+                     "       u.username AS author_name, f.name AS forum_name, " +
                      "       COUNT(p.id) AS post_count " +
                      "FROM threads t " +
                      "JOIN users u ON t.user_id = u.id " +
+                     "JOIN forums f ON t.forum_id = f.id " +
                      "LEFT JOIN posts p ON t.id = p.thread_id " +
                      "WHERE t.forum_id = ? " +
-                     "GROUP BY t.id, t.forum_id, t.user_id, t.title, t.created_at, u.username " +
+                     "GROUP BY t.id, t.forum_id, t.user_id, t.title, t.created_at, u.username, f.name " +
                      "ORDER BY t.created_at DESC";
 
         try (Connection conn = DBUtil.getConnection();
@@ -100,18 +102,48 @@ public class ForumThreadDAO {
     }
 
     /**
+     * Retrieves the most recent threads across all forums.
+     */
+    public List<ForumThread> findRecent(int limit) throws SQLException {
+        int max = (limit > 0) ? limit : 20;
+        List<ForumThread> list = new ArrayList<>();
+        String sql = "SELECT t.id, t.forum_id, t.user_id, t.title, t.created_at, " +
+                     "       u.username AS author_name, f.name AS forum_name, " +
+                     "       COUNT(p.id) AS post_count " +
+                     "FROM threads t " +
+                     "JOIN users u ON t.user_id = u.id " +
+                     "JOIN forums f ON t.forum_id = f.id " +
+                     "LEFT JOIN posts p ON t.id = p.thread_id " +
+                     "GROUP BY t.id, t.forum_id, t.user_id, t.title, t.created_at, u.username, f.name " +
+                     "ORDER BY t.created_at DESC LIMIT ?";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, max);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapRowToThread(rs));
+                }
+            }
+        }
+        return list;
+    }
+
+    /**
      * Retrieves all threads created by a specific user.
      */
     public List<ForumThread> findByUserId(int userId) throws SQLException {
         List<ForumThread> list = new ArrayList<>();
         String sql = "SELECT t.id, t.forum_id, t.user_id, t.title, t.created_at, " +
-                     "       u.username AS author_name, " +
+                     "       u.username AS author_name, f.name AS forum_name, " +
                      "       COUNT(p.id) AS post_count " +
                      "FROM threads t " +
                      "JOIN users u ON t.user_id = u.id " +
+                     "JOIN forums f ON t.forum_id = f.id " +
                      "LEFT JOIN posts p ON t.id = p.thread_id " +
                      "WHERE t.user_id = ? " +
-                     "GROUP BY t.id, t.forum_id, t.user_id, t.title, t.created_at, u.username " +
+                     "GROUP BY t.id, t.forum_id, t.user_id, t.title, t.created_at, u.username, f.name " +
                      "ORDER BY t.created_at DESC";
 
         try (Connection conn = DBUtil.getConnection();
@@ -134,6 +166,7 @@ public class ForumThreadDAO {
         thread.setUserId(rs.getInt("user_id"));
         thread.setTitle(rs.getString("title"));
         thread.setAuthorName(rs.getString("author_name"));
+        thread.setForumName(rs.getString("forum_name"));
         thread.setPostCount(rs.getInt("post_count"));
 
         Timestamp ts = rs.getTimestamp("created_at");

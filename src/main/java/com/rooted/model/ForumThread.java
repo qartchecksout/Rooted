@@ -7,9 +7,6 @@ import java.time.LocalDateTime;
  * Maps to the `threads` table in the database.
  *
  * Named ForumThread (not Thread) to avoid conflict with java.lang.Thread.
- *
- * authorName and postCount are computed fields populated by
- * ForumThreadDAO via JOIN queries — they are NOT stored in the DB.
  */
 public class ForumThread {
 
@@ -21,20 +18,16 @@ public class ForumThread {
 
     // Computed fields — populated by DAO via JOINs, not stored in DB
     private String        authorName;     // username from users table
+    private String        forumName;      // name from forums table
     private int           postCount;      // COUNT of posts in this thread
-
-    // --- Constructors ---
 
     public ForumThread() {}
 
-    /** Constructor used when creating a new thread (before DB insert). */
     public ForumThread(int forumId, int userId, String title) {
         this.forumId = forumId;
         this.userId  = userId;
         this.title   = title;
     }
-
-    // --- Getters & Setters ---
 
     public int getId()                         { return id; }
     public void setId(int id)                  { this.id = id; }
@@ -53,6 +46,9 @@ public class ForumThread {
 
     public String getAuthorName()                         { return authorName; }
     public void setAuthorName(String authorName)          { this.authorName = authorName; }
+
+    public String getForumName()                          { return forumName; }
+    public void setForumName(String forumName)            { this.forumName = forumName; }
 
     public int getPostCount()                  { return postCount; }
     public void setPostCount(int postCount)    { this.postCount = postCount; }

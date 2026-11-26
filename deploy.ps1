@@ -1,21 +1,29 @@
-# Rebuilds the project and redeploys it to a local Tomcat.
-# Requires the CATALINA_HOME environment variable (see README).
+# Rebuilds the project and redeploys it to a local external Tomcat.
+# Requires CATALINA_HOME environment variable (see README).
 
 $tomcat = $env:CATALINA_HOME
 if (-not $tomcat -or -not (Test-Path "$tomcat\bin\startup.bat")) {
     Write-Host "CATALINA_HOME is not set or does not point to a Tomcat folder."
-    Write-Host "See the 'One-time setup' section of README.md."
+    Write-Host "Tip: To run Rooted without installing Tomcat, just run .\run.bat or .\run.ps1 instead!"
     exit 1
 }
 
-mvn clean package
+if (Get-Command mvn -ErrorAction SilentlyContinue) {
+    mvn clean package
+} else {
+    .\mvnw.cmd clean package
+}
+
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Build failed - not deploying."
     exit 1
 }
 
-& "$tomcat\bin\shutdown.bat"
-Start-Sleep -Seconds 8
+try {
+    & "$tomcat\bin\shutdown.bat" 2>$null
+} catch {
+}
+Start-Sleep -Seconds 5
 
 Remove-Item -Recurse -Force "$tomcat\webapps\rooted" -ErrorAction SilentlyContinue
 Remove-Item -Force "$tomcat\webapps\rooted.war" -ErrorAction SilentlyContinue

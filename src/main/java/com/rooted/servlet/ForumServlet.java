@@ -18,7 +18,8 @@ import java.util.Optional;
 
 /**
  * Controller for forum boards.
- * Displays all discussion threads within a specific forum.
+ * Displays either all discussion boards + recent threads (/forums) or
+ * all discussion threads within a specific forum (/forums?id=1).
  */
 @WebServlet({"/forums", "/forum"})
 public class ForumServlet extends HttpServlet {
@@ -34,15 +35,16 @@ public class ForumServlet extends HttpServlet {
         String slugParam = request.getParameter("slug");
 
         if ((idParam == null || idParam.isEmpty()) && (slugParam == null || slugParam.isEmpty())) {
-            // No specific forum requested — show all forums
             try {
                 List<Forum> forums = forumDAO.findAll();
+                List<ForumThread> recentThreads = threadDAO.findRecent(15);
                 request.setAttribute("forums", forums);
-                request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
+                request.setAttribute("recentThreads", recentThreads);
+                request.getRequestDispatcher("/WEB-INF/views/forums.jsp").forward(request, response);
                 return;
             } catch (SQLException e) {
                 getServletContext().log("Failed to load forums", e);
-                response.sendRedirect(request.getContextPath() + "/home");
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to load discussion boards.");
                 return;
             }
         }

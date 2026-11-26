@@ -37,6 +37,12 @@ public class AuthFilter implements Filter {
             String uri = request.getRequestURI();
             String contextPath = request.getContextPath();
             String relative = uri.substring(contextPath.length());
+
+            if ("/reply".equals(relative)) {
+                response.sendRedirect(contextPath + "/login");
+                return;
+            }
+
             String query = request.getQueryString();
             if (query != null && !query.isEmpty()) {
                 relative += "?" + query;

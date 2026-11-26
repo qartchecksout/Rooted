@@ -130,7 +130,11 @@
     </main>
 
     <footer>
-        <p>Made with care and a little dirt. &copy; Rooted</p>
+        <p>Made with care and a little dirt. &copy; Rooted
+            <c:if test="${not empty applicationScope.dbMode}">
+                &middot; <small><c:out value="${applicationScope.dbMode}"/></small>
+            </c:if>
+        </p>
     </footer>
 
 </body>
